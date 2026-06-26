@@ -457,7 +457,7 @@ def _render_footer() -> None:
 
 def run() -> None:
     st.set_page_config(
-        page_title="中大美食地圖",
+        page_title="中正大學美食地圖",
         page_icon="🍜",
         layout="wide",
         initial_sidebar_state="auto",
@@ -478,7 +478,7 @@ def run() -> None:
     if "campus_lon" not in st.session_state:
         st.session_state.campus_lon = lon0
 
-    st.title("國立中正大學 校園美食地圖")
+    st.title("中正大學美食地圖")
     st.caption(
         "中心點預設：中大民雄校本部（23.5615, 120.4808）。"
         "綜合分 = 黃氏星等（分級×星分×評論量）× 距離衰減。"
