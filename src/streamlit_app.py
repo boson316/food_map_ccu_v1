@@ -141,7 +141,8 @@ _DISPLAY_COLUMNS = (
     "分類",
 )
 
-_MAP_STYLE = "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
+# 國土測繪 EMAP5：台灣境內地名為中文（Carto Voyager 在鄉鎮多為拼音）
+_MAP_TILE_URL = "https://wmts.nlsc.gov.tw/wmts/EMAP5/default/GoogleMapsCompatible/{z}/{y}/{x}"
 _GOOGLE_PIN = [234, 67, 53, 220]
 _CAMPUS_PIN = [26, 115, 232, 235]
 _HIGHLIGHT_PIN = [251, 188, 5, 255]
@@ -273,6 +274,13 @@ def _render_map(
         radius_max_pixels=6,
         pickable=True,
     )
+    tile_layer = pdk.Layer(
+        "TileLayer",
+        data=_MAP_TILE_URL,
+        min_zoom=0,
+        max_zoom=19,
+        tile_size=256,
+    )
     focus_layer = pdk.Layer(
         "ScatterplotLayer",
         data=map_df[map_df["selected"]],
@@ -293,7 +301,7 @@ def _render_map(
         radius_max_pixels=8,
         pickable=True,
     )
-    layers = [base_layer, center_layer]
+    layers = [tile_layer, base_layer, center_layer]
     if focus_row is not None and not map_df[map_df["selected"]].empty:
         layers.insert(1, focus_layer)
     elif focus_row is not None:
@@ -301,7 +309,7 @@ def _render_map(
 
     view = pdk.ViewState(latitude=map_center_lat, longitude=map_center_lon, zoom=zoom, pitch=0)
     deck = pdk.Deck(
-        map_style=_MAP_STYLE,
+        map_style=None,
         layers=layers,
         initial_view_state=view,
         tooltip={"html": "{tooltip_html}", "style": {"color": "white", "fontSize": "12px"}},
@@ -555,7 +563,7 @@ def run() -> None:
         focus_row = _render_list_table(df, sort_by=sort_by)
 
         st.subheader("地圖")
-        st.caption("淺色街道圖 · 🔵 中大校本部 · 🔴 餐廳（點狀標記）· 🟡 你選的店")
+        st.caption("中文底圖（國土測繪）· 🔵 中大校本部 · 🔴 餐廳（點狀標記）· 🟡 你選的店")
         if focus_row is not None:
             _render_focus_card(focus_row)
         map_df = df[
