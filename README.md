@@ -12,8 +12,8 @@ Campus food map for **National Chung Cheng University (Minxiong)**. Offline Goog
 | Item | Value |
 |------|-------|
 | Center | `23.5615, 120.4808` |
-| Default search radius | 3 km |
-| Slider max | 8 km |
+| Default search radius | 0.5 km |
+| Slider max | 3 km |
 | Fetch pool | 8 km |
 | Wheel | Top 40 |
 
