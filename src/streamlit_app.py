@@ -502,7 +502,7 @@ def run() -> None:
 
         lat = st.number_input("校園中心緯度", format="%.6f", key="campus_lat")
         lon = st.number_input("校園中心經度", format="%.6f", key="campus_lon")
-        radius = st.slider("搜尋半徑（公里）", min_value=0.3, max_value=8.0, value=3.0, step=0.1)
+        radius = st.slider("搜尋半徑（公里）", min_value=0.3, max_value=8.0, value=0.5, step=0.1)
         min_reviews = st.number_input("最少評論數", min_value=0, value=0, step=1)
         selected_food_groups = _render_food_group_selector()
         budget_filter = st.checkbox("預算：平價 ≈100 元", value=False)
